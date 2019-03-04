@@ -53,13 +53,12 @@ public class EnemyBehavior : MonoBehaviour
     {
       if(sr.flipX) //facing left
       {
-        GameObject.Find("Bullet").GetComponent<Bullet>().x = -2f;
-        Instantiate(bullet, transform.position, Quaternion.identity);
+        GameObject.Find("Bullet").GetComponent<Bullet>().x = -3f;
       }
       else
       {
-        GameObject.Find("Bullet").GetComponent<Bullet>().x = 2f;
-        Instantiate(bullet, transform.position, Quaternion.identity);
+        GameObject.Find("Bullet").GetComponent<Bullet>().x = 3f;
       }
+      Instantiate(bullet, transform.position, Quaternion.identity);
     }
 }

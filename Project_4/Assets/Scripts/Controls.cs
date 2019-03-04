@@ -15,7 +15,7 @@ public class Controls : MonoBehaviour {
     public AudioSource a2;
     public AudioSource a3;
     public int enemyCount = 0;
-    public int totalEnemies = 10;
+    public int totalEnemies = 30;
     public int health = 100;
     public bool gameFlag = true;
     public Text health_text;
@@ -33,7 +33,7 @@ public class Controls : MonoBehaviour {
 
     void Update ()
     {
-      if ((Input.GetKey(KeyCode.Space) || totalEnemies == 0) && gameFlag == true)
+      if (Input.GetKey(KeyCode.Space) || (totalEnemies == 0 && gameFlag == true))
       {
         //win game
         a1.Stop();
@@ -88,19 +88,40 @@ public class Controls : MonoBehaviour {
       health_text.text = "Health: " + health.ToString();
       enemiesLeft.text = "Enemies: " + totalEnemies.ToString();
     }
+    void hitWithBullet()
+    {
+      health -=10;
+    }
     void OnCollisionEnter2D (Collision2D col)
     {
       if(col.gameObject.tag.Equals("Bullet"))
       {
+        //Debug.Log("Ness: " + transform.position.x);
+        //Debug.Log("Bullet: " + col.gameObject.transform.position.x);
+        float nessX = transform.position.x;
+        float bulletX = col.gameObject.transform.position.x;
         if(anim.GetBool("Guard") == true)
         {
-          Destroy(col.gameObject);
+          if((bulletX - nessX) > 0) //bullet hits from right
+          {
+            if(sr.flipX == true) //facing left
+            {
+              hitWithBullet();
+            }
+          }
+          else //bullet hits from left
+          {
+            if(sr.flipX == false)//facing right
+            {
+              hitWithBullet();
+            }
+          }
         }
         else
         {
-          health-=10;
-          Destroy(col.gameObject);
+          hitWithBullet();
         }
+        Destroy(col.gameObject);
       }
       if(health <= 0)
       {

@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
         x = Random.Range(-5f, 5f);
         spawnLoc = new Vector2(x, transform.position.y);
 
-        if(GameObject.Find("ness_1").GetComponent<Controls>().enemyCount < 6 && GameObject.Find("ness_1").GetComponent<Controls>().totalEnemies - GameObject.Find("ness_1").GetComponent<Controls>().enemyCount > 0)
+        if(GameObject.Find("ness_1").GetComponent<Controls>().enemyCount < 10 && GameObject.Find("ness_1").GetComponent<Controls>().totalEnemies - GameObject.Find("ness_1").GetComponent<Controls>().enemyCount > 0)
         {
           if (GameObject.Find("ness_1").GetComponent<Controls>().gameFlag == true)
           {
