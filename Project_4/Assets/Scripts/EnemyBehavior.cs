@@ -8,6 +8,7 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject ness;
     public GameObject bullet;
     public SpriteRenderer sr;
+    public AudioSource death_sound;
     void Start()
     {
       sr = GetComponent<SpriteRenderer>();
@@ -16,6 +17,10 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      if (GameObject.Find("ness_1").GetComponent<Controls>().gameFlag == false)
+      {
+        Destroy(gameObject);
+      }
       float x = this.transform.position.x;
       float nessX = ness.transform.position.x;
       if (Input.GetKey(KeyCode.UpArrow))
@@ -24,6 +29,7 @@ public class EnemyBehavior : MonoBehaviour
         {
           GameObject.Find("ness_1").GetComponent<Controls>().totalEnemies--;
           GameObject.Find("ness_1").GetComponent<Controls>().enemyCount--;
+          death_sound.Play();
           Destroy(gameObject);
         }
       }
@@ -35,7 +41,7 @@ public class EnemyBehavior : MonoBehaviour
       {
         sr.flipX = true;
       }
-      int r = Random.Range(-5, 100);
+      int r = Random.Range(-200, 200);
       {
         if(r == 0)
         {

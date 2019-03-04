@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //https://www.youtube.com/watch?v=FFBODhX_IUM
 //https://www.youtube.com/watch?v=U2Z6Onm40oA
@@ -12,27 +13,36 @@ public class Controls : MonoBehaviour {
     public Animator anim;
     public AudioSource a1;
     public AudioSource a2;
+    public AudioSource a3;
     public int enemyCount = 0;
     public int totalEnemies = 10;
-
-    bool winFlag = false;
+    public int health = 100;
+    public bool gameFlag = true;
+    public Text health_text;
+    public Text enemiesLeft;
+    public Text wl;
 
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        wl.text = "";
+        //health_text = GetComponent<Text>();
+        //enemiesLeft = GetComponent<Text>();
     }
 
-    void Update () {
-      if (Input.GetKey(KeyCode.Space) || totalEnemies == 0 && winFlag == false)
+    void Update ()
+    {
+      if ((Input.GetKey(KeyCode.Space) || totalEnemies == 0) && gameFlag == true)
       {
         //win game
         a1.Stop();
         a2.Play();
-        winFlag = true;
+        gameFlag = false;
+        wl.text = "You Win!";
         anim.SetTrigger("Win");
       }
-      if(!winFlag)
+      if(gameFlag)
       {
         anim.SetFloat("Speed", 0);
         anim.SetBool("Guard", false);
@@ -43,7 +53,6 @@ public class Controls : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-          //Debug.Log(this.transform.position.x);
           sr.flipX = false;
           if(anim.GetBool("Guard") == false)
           {
@@ -75,6 +84,31 @@ public class Controls : MonoBehaviour {
           anim.SetTrigger("Hit");
           //anim.SetBool("Hit", false);
         }
+      }
+      health_text.text = "Health: " + health.ToString();
+      enemiesLeft.text = "Enemies: " + totalEnemies.ToString();
+    }
+    void OnCollisionEnter2D (Collision2D col)
+    {
+      if(col.gameObject.tag.Equals("Bullet"))
+      {
+        if(anim.GetBool("Guard") == true)
+        {
+          Destroy(col.gameObject);
+        }
+        else
+        {
+          health-=10;
+          Destroy(col.gameObject);
+        }
+      }
+      if(health <= 0)
+      {
+        anim.SetTrigger("Death");
+        wl.text = "You Lose!";
+        gameFlag = false; //game over
+        a1.Stop();
+        a3.Play();
       }
     }
 }
