@@ -17,7 +17,7 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      if (GameObject.Find("ness_1").GetComponent<Controls>().gameFlag == false)
+      if (GameObject.Find("ness_1").GetComponent<Ness>().gameFlag == false)
       {
         Destroy(gameObject);
       }
@@ -27,8 +27,8 @@ public class EnemyBehavior : MonoBehaviour
       {
         if(Mathf.Abs(x - nessX) <= 0.5)
         {
-          GameObject.Find("ness_1").GetComponent<Controls>().totalEnemies--;
-          GameObject.Find("ness_1").GetComponent<Controls>().enemyCount--;
+          GameObject.Find("ness_1").GetComponent<Ness>().totalEnemies--;
+          GameObject.Find("ness_1").GetComponent<Ness>().enemyCount--;
           death_sound.Play();
           Destroy(gameObject);
         }

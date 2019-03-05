@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      if (GameObject.Find("ness_1").GetComponent<Controls>().gameFlag == false)
+      if (GameObject.Find("ness_1").GetComponent<Ness>().gameFlag == false)
       {
         Destroy(gameObject);
       }
