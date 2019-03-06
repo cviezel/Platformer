@@ -25,13 +25,58 @@ public class Ness : MonoBehaviour {
   public Text health_text;
   public Text enemiesLeft;
   public Text wl;
+  public Button shieldButton;
+  public Button punchButton;
 
   public bool firstRoundFlag = true;
 
   double leftBound = -5.21;
   double rightBound = 5.36;
 
+  void shield()
+  {
+    anim.SetBool("Guard", true);
+    if(!shieldSound.isPlaying)
+    shieldSound.Play();
+  }
+  void hit()
+  {
+    punch.Play();
+    anim.SetTrigger("Hit");
+  }
+  void moveLeft()
+  {
+    sr.flipX = true;
+    if(anim.GetBool("Guard") == false)
+    {
+      anim.SetFloat("Speed", 0.2f);
+      Vector3 position = this.transform.position;
+      if(position.x >= leftBound)
+      {
+        position.x -= movespeed;
+        this.transform.position = position;
+      }
+    }
+  }
+  void moveRight()
+  {
+    sr.flipX = false;
+    if(anim.GetBool("Guard") == false)
+    {
+      anim.SetFloat("Speed", 0.2f);
+      Vector3 position = this.transform.position;
+      if(position.x <= rightBound)
+      {
+        position.x += movespeed;
+        this.transform.position = position;
+      }
+    }
+  }
+
+
   void Start () {
+    shieldButton.onClick.AddListener(shield);
+    punchButton.onClick.AddListener(hit);
     rb = GetComponent<Rigidbody2D>();
     anim = GetComponent<Animator>();
     sr = GetComponent<SpriteRenderer>();
@@ -96,44 +141,19 @@ public class Ness : MonoBehaviour {
       anim.SetBool("Guard", false);
       if (Input.GetKey(KeyCode.DownArrow))
       {
-        anim.SetBool("Guard", true);
-        if(!shieldSound.isPlaying)
-        shieldSound.Play();
-        //anim.SetBool("Hit", false);
-      }
-      if (Input.GetKey(KeyCode.RightArrow))
-      {
-        sr.flipX = false;
-        if(anim.GetBool("Guard") == false)
-        {
-          anim.SetFloat("Speed", 0.2f);
-          Vector3 position = this.transform.position;
-          if(position.x <= rightBound)
-          {
-            position.x += movespeed;
-            this.transform.position = position;
-          }
-        }
-      }
-      if (Input.GetKey(KeyCode.LeftArrow))
-      {
-        sr.flipX = true;
-        if(anim.GetBool("Guard") == false)
-        {
-          anim.SetFloat("Speed", 0.2f);
-          Vector3 position = this.transform.position;
-          if(position.x >= leftBound)
-          {
-            position.x -= movespeed;
-            this.transform.position = position;
-          }
-        }
+        shield();
       }
       if (Input.GetKey(KeyCode.UpArrow))
       {
-        punch.Play();
-        anim.SetTrigger("Hit");
-        //anim.SetBool("Hit", false);
+        hit();
+      }
+      if (Input.GetKey(KeyCode.RightArrow))
+      {
+        moveRight();
+      }
+      if (Input.GetKey(KeyCode.LeftArrow))
+      {
+        moveLeft();
       }
       health_text.text = "Health: " + health.ToString();
       if(firstRoundFlag)
