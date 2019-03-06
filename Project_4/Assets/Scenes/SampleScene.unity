@@ -923,6 +923,7 @@ MonoBehaviour:
   enemy: {fileID: 1088678403}
   ness: {fileID: 1400470596}
   bullet: {fileID: 1550515991}
+  spawnRate: 1
 --- !u!4 &771641458
 Transform:
   m_ObjectHideFlags: 0
@@ -1596,7 +1597,7 @@ MonoBehaviour:
   bulletHit: {fileID: 251518255}
   shieldSound: {fileID: 1194415487}
   enemyCount: 0
-  totalEnemies: 2
+  totalEnemies: 30
   health: 100
   gameFlag: 1
   health_text: {fileID: 62474403}

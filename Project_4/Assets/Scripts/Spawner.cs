@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
   public GameObject bullet;
   float x;
   Vector2 spawnLoc;
-  float spawnRate = 2;
+  public float spawnRate;
   float nextSpawn = 0;
   void Start()
   {
@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
         }
         x = Random.Range(-5f, 5f);
         spawnLoc = new Vector2(x, transform.position.y);
-        if(GameObject.Find("ness_1").GetComponent<Ness>().enemyCount < 10 && GameObject.Find("ness_1").GetComponent<Ness>().totalEnemies - GameObject.Find("ness_1").GetComponent<Ness>().enemyCount > 0)
+        if(GameObject.Find("ness_1").GetComponent<Ness>().enemyCount < 6 && GameObject.Find("ness_1").GetComponent<Ness>().totalEnemies - GameObject.Find("ness_1").GetComponent<Ness>().enemyCount > 0)
         {
           Instantiate(enemy, spawnLoc, Quaternion.identity);
           GameObject.Find("ness_1").GetComponent<Ness>().enemyCount++;
