@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 //https://www.youtube.com/watch?v=FFBODhX_IUM
 //https://www.youtube.com/watch?v=U2Z6Onm40oA
@@ -27,12 +28,19 @@ public class Ness : MonoBehaviour {
   public Text wl;
   public Button shieldButton;
   public Button punchButton;
-
   public bool firstRoundFlag = true;
-
   double leftBound = -5.21;
   double rightBound = 5.36;
 
+  void Start ()
+  {
+    //shieldButton.onClick.AddListener(shield);
+    punchButton.onClick.AddListener(hit);
+    rb = GetComponent<Rigidbody2D>();
+    anim = GetComponent<Animator>();
+    sr = GetComponent<SpriteRenderer>();
+    wl.text = "";
+  }
   void shield()
   {
     anim.SetBool("Guard", true);
@@ -72,18 +80,6 @@ public class Ness : MonoBehaviour {
       }
     }
   }
-
-
-  void Start () {
-    shieldButton.onClick.AddListener(shield);
-    punchButton.onClick.AddListener(hit);
-    rb = GetComponent<Rigidbody2D>();
-    anim = GetComponent<Animator>();
-    sr = GetComponent<SpriteRenderer>();
-    wl.text = "";
-    //health_text = GetComponent<Text>();
-    //enemiesLeft = GetComponent<Text>();
-  }
   void winGame()
   {
     //win game
@@ -100,6 +96,8 @@ public class Ness : MonoBehaviour {
     anim.SetTrigger("Win");
     enemiesLeft.text = "";
     health_text.text = "";
+    Destroy(shieldButton.gameObject);
+    Destroy(punchButton.gameObject);
   }
   void loseGame()
   {
@@ -111,6 +109,8 @@ public class Ness : MonoBehaviour {
     a3.Play();
     enemiesLeft.text = "";
     health_text.text = "";
+    Destroy(shieldButton.gameObject);
+    Destroy(punchButton.gameObject);
   }
   void secondRound()
   {
@@ -138,10 +138,13 @@ public class Ness : MonoBehaviour {
         secondRound();
       }
       anim.SetFloat("Speed", 0);
-      anim.SetBool("Guard", false);
+      //anim.SetBool("Guard", false);
       if (Input.GetKey(KeyCode.DownArrow))
       {
-        shield();
+        if(anim.GetBool("Guard") == false)
+          shield();
+        else
+          anim.SetBool("Guard", false);
       }
       if (Input.GetKey(KeyCode.UpArrow))
       {

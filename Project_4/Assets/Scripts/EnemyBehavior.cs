@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -9,11 +10,24 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject bullet;
     public SpriteRenderer sr;
     public AudioSource death_sound;
+    public Button punchButton;
+    void hit()
+    {
+      float x = this.transform.position.x;
+      float nessX = ness.transform.position.x;
+      if(Mathf.Abs(x - nessX) <= 0.5)
+      {
+        GameObject.Find("ness_1").GetComponent<Ness>().totalEnemies--;
+        GameObject.Find("ness_1").GetComponent<Ness>().enemyCount--;
+        death_sound.Play();
+        Destroy(gameObject);
+      }
+    }
     void Start()
     {
       sr = GetComponent<SpriteRenderer>();
+      punchButton.onClick.AddListener(hit);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -25,13 +39,7 @@ public class EnemyBehavior : MonoBehaviour
       float nessX = ness.transform.position.x;
       if (Input.GetKey(KeyCode.UpArrow))
       {
-        if(Mathf.Abs(x - nessX) <= 0.5)
-        {
-          GameObject.Find("ness_1").GetComponent<Ness>().totalEnemies--;
-          GameObject.Find("ness_1").GetComponent<Ness>().enemyCount--;
-          death_sound.Play();
-          Destroy(gameObject);
-        }
+        hit();
       }
       if(x <= nessX)
       {
