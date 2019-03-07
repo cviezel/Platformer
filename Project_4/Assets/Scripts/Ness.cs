@@ -52,7 +52,7 @@ public class Ness : MonoBehaviour {
     punch.Play();
     anim.SetTrigger("Hit");
   }
-  void moveLeft()
+  public void moveLeft()
   {
     sr.flipX = true;
     if(anim.GetBool("Guard") == false)
@@ -66,7 +66,7 @@ public class Ness : MonoBehaviour {
       }
     }
   }
-  void moveRight()
+  public void moveRight()
   {
     sr.flipX = false;
     if(anim.GetBool("Guard") == false)
@@ -137,8 +137,7 @@ public class Ness : MonoBehaviour {
         leftBound = 11;
         secondRound();
       }
-      anim.SetFloat("Speed", 0);
-      //anim.SetBool("Guard", false);
+      //keyboard controls for testing
       if (Input.GetKey(KeyCode.DownArrow))
       {
         if(anim.GetBool("Guard") == false)

@@ -62,7 +62,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
+    <Compile Include="Assets\Scripts\LeftButton.cs" />
     <Compile Include="Assets\Scripts\Ness.cs" />
+    <Compile Include="Assets\Scripts\RightButton.cs" />
     <Compile Include="Assets\Scripts\run_behavior.cs" />
     <Compile Include="Assets\Scripts\shieldButton.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
