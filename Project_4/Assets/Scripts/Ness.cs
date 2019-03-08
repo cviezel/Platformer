@@ -29,8 +29,9 @@ public class Ness : MonoBehaviour {
   public Button shieldButton;
   public Button punchButton;
   public bool firstRoundFlag = true;
-  double leftBound = -5.21;
-  double rightBound = 5.36;
+  public double leftBound = -5.21;
+  public double rightBound = 5.36;
+  public bool secondRoundFlag = false;
 
   void Start ()
   {
@@ -80,7 +81,7 @@ public class Ness : MonoBehaviour {
       }
     }
   }
-  void winGame()
+  public void winGame()
   {
     //win game
     sr.flipX = false;
@@ -115,12 +116,17 @@ public class Ness : MonoBehaviour {
   void secondRound()
   {
     health = 100;
-    enemiesLeft.text = "???";
+    enemiesLeft.text = "";
+    //Destroy(shieldButton.gameObject);
+    //Destroy(punchButton.gameObject);
+    secondRoundFlag = true;
   }
   void secondRoundInit()
   {
     firstRoundFlag = false;
     rightBound = 20;
+    Destroy(shieldButton.gameObject);
+    Destroy(punchButton.gameObject);
   }
   void Update ()
   {
@@ -137,7 +143,7 @@ public class Ness : MonoBehaviour {
         leftBound = 11;
         secondRound();
       }
-      //keyboard controls for testing
+      //keyboard controls for testings
       if (Input.GetKey(KeyCode.DownArrow))
       {
         if(anim.GetBool("Guard") == false)
@@ -179,7 +185,7 @@ public class Ness : MonoBehaviour {
   }
   void OnCollisionEnter2D (Collision2D col)
   {
-    if(col.gameObject.tag.Equals("Bullet"))
+    if(col.gameObject.tag.Equals("Bullet") || col.gameObject.tag.Equals("Meteor"))
     {
       //Debug.Log("Ness: " + transform.position.x);
       //Debug.Log("Bullet: " + col.gameObject.transform.position.x);
