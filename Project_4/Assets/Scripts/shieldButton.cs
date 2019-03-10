@@ -21,6 +21,7 @@ public class shieldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void OnPointerUp(PointerEventData eventData)
     {
       anim.SetBool("Guard", false);
+      shieldSound.Stop();
     }
     // Update is called once per frame
     void Update()

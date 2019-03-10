@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
-//https://www.youtube.com/watch?v=FFBODhX_IUM
-//https://www.youtube.com/watch?v=U2Z6Onm40oA
+using UnityEngine.SceneManagement;
 
 public class Ness : MonoBehaviour {
   public Rigidbody2D rb;
@@ -32,15 +30,21 @@ public class Ness : MonoBehaviour {
   public double leftBound = -5.21;
   public double rightBound = 5.36;
   public bool secondRoundFlag = false;
+  public Button restart;
 
   void Start ()
   {
     //shieldButton.onClick.AddListener(shield);
     punchButton.onClick.AddListener(hit);
+    restart.onClick.AddListener(resetGame);
     rb = GetComponent<Rigidbody2D>();
     anim = GetComponent<Animator>();
     sr = GetComponent<SpriteRenderer>();
     wl.text = "";
+  }
+  void resetGame()
+  {
+    SceneManager.LoadScene("SampleScene");
   }
   void shield()
   {
@@ -120,13 +124,14 @@ public class Ness : MonoBehaviour {
     //Destroy(shieldButton.gameObject);
     //Destroy(punchButton.gameObject);
     secondRoundFlag = true;
+    Destroy(shieldButton.gameObject);
+    Destroy(punchButton.gameObject);
+    leftBound = 14;
   }
   void secondRoundInit()
   {
     firstRoundFlag = false;
-    rightBound = 20;
-    Destroy(shieldButton.gameObject);
-    Destroy(punchButton.gameObject);
+    rightBound = 21;
   }
   void Update ()
   {
