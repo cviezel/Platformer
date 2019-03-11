@@ -32,7 +32,7 @@ public class BossFight : MonoBehaviour
       if(Time.time > nextSpawn)
       {
         nextSpawn = Time.time + spawnRate;
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 5; i++)
         {
           x = Random.Range((float)n.leftBound, (float)n.rightBound);
           spawnLoc = new Vector2(x, 5);
