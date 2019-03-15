@@ -6,6 +6,8 @@ The game has two levels which must be completed in order to win. The first level
 
 The second level of the game contains meteor barrages which fall in a cluster from the sky at a regular interval. If a meteor makes contact with the player it will deal 10 damage. To win the game, the player must survive for a minute.
 
+The player moves left and right by pressing and holding on either side of the phone screen and can punch, shield, or reset the game by pressing the respective buttons on the UI.
+
 The game has background music, winning/losing screens, sound effects, and animations for running, punching, and shielding.
 
 Sample gameplay: https://streamable.com/svrrn
